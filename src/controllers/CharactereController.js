@@ -1,7 +1,7 @@
-class CharactereController {
+class CharacterController {
   index(req, res) {
     res.send('OK');
   }
 }
 
-export default new CharactereController();
+export default new CharacterController();

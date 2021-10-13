@@ -1,9 +1,9 @@
 import { Sequelize } from 'sequelize';
 import databaseConfig from '../config/database';
-import Charactere from '../models/Charactere';
+import Character from '../models/Character';
 
 const connection = new Sequelize(databaseConfig);
 
-const models = [Charactere];
+const models = [Character];
 
 models.forEach((model) => model.init(connection));

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import characteresRoutes from './routes/characteres';
+import charactersRoutes from './routes/characteres';
 
 class App {
   constructor() {
@@ -14,7 +14,7 @@ class App {
   }
 
   routes() {
-    this.app.use('/characteres/', characteresRoutes);
+    this.app.use('/characters/', charactersRoutes);
   }
 }
 
