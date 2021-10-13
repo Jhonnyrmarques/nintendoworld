@@ -19,7 +19,7 @@ export default class Character extends Model {
         validate: {
           len: {
             args: [20, 400],
-            msg: '',
+            msg: 'Description must be between 20 and 400 characters',
           },
         },
       },
