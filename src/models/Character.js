@@ -6,6 +6,9 @@ export default class Character extends Model {
       name: {
         type: Sequelize.STRING,
         defaultValue: '',
+        unique: {
+          msg: 'Name already registered in the database',
+        },
         validate: {
           len: {
             args: [3, 255],
@@ -14,12 +17,11 @@ export default class Character extends Model {
         },
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         defaultValue: '',
         validate: {
           len: {
-            args: [20, 400],
-            msg: 'Description must be between 20 and 400 characters',
+            msg: 'Description cannot be empty',
           },
         },
       },
