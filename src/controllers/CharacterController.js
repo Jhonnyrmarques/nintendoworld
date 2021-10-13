@@ -1,14 +1,74 @@
 import Character from '../models/Character';
 
 class CharacterController {
-  index(req, res) {
-    res.send('OK');
+  async index(req, res) {
+    const characters = await Character.findAll({
+      attributes: ['id', 'name', 'description', 'creators', 'universe'],
+      order: [['id', 'DESC']],
+    });
+    res.json(characters);
   }
 
   async store(req, res) {
     try {
       const character = await Character.create(req.body);
       return res.json(character);
+    } catch (e) {
+      return res.status(400).json({
+        errors: e.errors.map((err) => err.message),
+      });
+    }
+  }
+
+  async show(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({
+          errors: ['ID not found in database'],
+        });
+      }
+
+      const character = await Character.findByPk(id, {
+        attributes: ['id', 'name', 'creators', 'universe'],
+        order: [['id', 'DESC']],
+      });
+
+      if (!character) {
+        res.status(400).json({
+          errors: ['Character not found in database'],
+        });
+      }
+
+      return res.json(character);
+    } catch (e) {
+      return res.status(400).json({
+        errors: e.errors.map((err) => err.message),
+      });
+    }
+  }
+
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({
+          errors: ['ID not found in database'],
+        });
+      }
+
+      const character = await Character.findByPk(id);
+
+      if (!character) {
+        return res.status(400).json({
+          errors: ['Character not found in database'],
+        });
+      }
+
+      const characterUpdated = await character.update(req.body);
+      return res.json(characterUpdated);
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
