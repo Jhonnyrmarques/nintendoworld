@@ -51,4 +51,8 @@ export default class Character extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.Image, { foreignKey: 'character_id' });
+  }
 }
