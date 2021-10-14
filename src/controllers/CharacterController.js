@@ -75,6 +75,32 @@ class CharacterController {
       });
     }
   }
+
+  async delete(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({
+          errors: ['ID not found in database'],
+        });
+      }
+
+      const character = await Character.findByPk(id);
+
+      if (!character) {
+        return res.status(400).json({
+          errors: ['Character not found in database'],
+        });
+      }
+      await character.destroy();
+      return res.json('Character successfully deleted');
+    } catch (e) {
+      return res.status(400).json({
+        errors: e.errors.map((err) => err.message),
+      });
+    }
+  }
 }
 
 export default new CharacterController();
