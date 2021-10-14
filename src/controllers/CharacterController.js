@@ -1,10 +1,15 @@
 import Character from '../models/Character';
+import Image from '../models/Image';
 
 class CharacterController {
   async index(req, res) {
     const characters = await Character.findAll({
       attributes: ['id', 'name', 'description', 'creators', 'universe'],
       order: [['id', 'DESC']],
+      include: {
+        model: Image,
+        attributes: ['url', 'filename'],
+      },
     });
     res.json(characters);
   }
