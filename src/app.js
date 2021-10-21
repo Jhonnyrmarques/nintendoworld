@@ -6,6 +6,9 @@ dotenv.config();
 import './database';
 
 import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+
 import charactersRoutes from './routes/characters';
 import userRoutes from './routes/users';
 import tokenRoutes from './routes/token';
@@ -19,6 +22,8 @@ class App {
   }
 
   middlewares() {
+    this.app.use(cors());
+    this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use('/files', express.static(resolve(__dirname, '..', 'uploads', 'img')));
